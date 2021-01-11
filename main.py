@@ -6,7 +6,7 @@ import numpy as np
 # зададим примеры
 
 
-class NeuralNetwork():
+class NeuralNetwork:
     def __init__(self):
         random.seed(1)
 

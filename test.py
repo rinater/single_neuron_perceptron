@@ -1,19 +1,27 @@
 from numpy import exp, array, random, dot
 from PIL import Image
 import numpy as np
-
+# тренировочные изображения
 training_img_1 = Image.open('learning_zero_1.png')
 training_img_2 = Image.open('learning_zero_2.png')
 training_img_3 = Image.open('learning_x_1.png')
 training_img_4 = Image.open('learning_x_2.png')
+training_img_5 = Image.open('test_x.png')
+training_img_6 = Image.open('test_x_3.png')
+# переведем массив
 arr1 = np.array(training_img_1)
 arr2 = np.array(training_img_2)
 arr3 = np.array(training_img_3)
 arr4 = np.array(training_img_4)
+arr5 = np.array(training_img_5)
+arr6 = np.array(training_img_6)
+
 flat_arr1 = arr1.ravel()
 flat_arr2 = arr2.ravel()
 flat_arr3 = arr3.ravel()
 flat_arr4 = arr4.ravel()
+flat_arr5 = arr5.ravel()
+flat_arr6 = arr6.ravel()
 
 
 def remove_every_other(my_list):
@@ -21,18 +29,22 @@ def remove_every_other(my_list):
         if my_list[i] == 255:
             my_list[i] = 1
     return my_list[::3]
+
+
 training_set_inputs = array([remove_every_other(flat_arr1),
                              remove_every_other(flat_arr2),
                              remove_every_other(flat_arr3),
-                             remove_every_other(flat_arr4)])
-training_set_outputs = array([[0, 0, 1, 1]]).T
+                             remove_every_other(flat_arr4),
+                             remove_every_other(flat_arr5),
+                             remove_every_other(flat_arr6)])
+training_set_outputs = array([[0, 0, 1, 1, 1, 1]]).T
 random.seed(1)
 synaptic_weights = 2 * random.random((100, 1)) - 1
 for iteration in range(10000):
     output = 1 / (1 + exp(-(dot(training_set_inputs, synaptic_weights))))
     synaptic_weights += dot(training_set_inputs.T, (training_set_outputs - output) * output * (1 - output))
 
-img = Image.open('test zero.png')
+img = Image.open('test_x_4.png')
 arr = np.array(img)
 flat_arr = arr.ravel()
 new_arr_2 = remove_every_other(flat_arr)
